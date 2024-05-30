@@ -109,6 +109,22 @@ export const CreateAccountAdmin: React.FC = () => {
 									label="Alamat"
 									labelPlacement="stacked"></IonTextarea>
 							</IonItem>
+							<IonItem>
+								<IonSelect
+									color="attendify"
+									label="Peran Akun"
+									placeholder="Admin / User"
+									labelPlacement="stacked">
+									{['Admin', 'User'].map((value) => (
+										<IonSelectOption
+											key={value}
+											color="attendify"
+											value={value}>
+											{value}
+										</IonSelectOption>
+									))}
+								</IonSelect>
+							</IonItem>
 						</IonList>
 					</IonCardContent>
 				</IonCard>
