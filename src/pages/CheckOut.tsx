@@ -112,6 +112,7 @@ export const CheckOut: React.FC = () => {
 									fontSize: '2.5rem',
 									fontWeight: '700',
 									marginTop: '-2rem',
+									fontVariantNumeric: 'tabular-nums',
 								}}>
 								{ctime}
 							</p>

@@ -93,23 +93,16 @@ export const CreatePermit: React.FC = () => {
 								<IonSelect
 									color="attendify"
 									label="Alasan Izin"
-									placeholder="Izin, Sakit, dan lain-lain"
+									placeholder="Sakit, Dinas, dan lain-lain"
 									labelPlacement="stacked">
-									<IonSelectOption
-										color="attendify"
-										value="apple">
-										Apple
-									</IonSelectOption>
-									<IonSelectOption
-										color="attendify"
-										value="banana">
-										Banana
-									</IonSelectOption>
-									<IonSelectOption
-										color="attendify"
-										value="orange">
-										Orange
-									</IonSelectOption>
+									{['Sakit', 'Dinas', 'Cuti', 'Lainnya'].map((value) => (
+										<IonSelectOption
+											key={value}
+											color="attendify"
+											value={value}>
+											{value}
+										</IonSelectOption>
+									))}
 								</IonSelect>
 							</IonItem>
 							<IonItem>

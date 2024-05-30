@@ -1,23 +1,23 @@
 import {
-	IonBackButton,
-	IonBadge,
+	IonPage,
+	IonHeader,
+	IonToolbar,
 	IonButtons,
+	IonBackButton,
+	IonTitle,
+	IonContent,
+	IonText,
 	IonCard,
 	IonCardContent,
-	IonCardHeader,
+	IonBadge,
+	IonAlert,
+	IonButton,
 	IonChip,
-	IonContent,
-	IonHeader,
-	IonIcon,
-	IonPage,
-	IonText,
-	IonTitle,
-	IonToolbar,
+	IonRouterLink,
 } from '@ionic/react';
-import { documentText, documentTextOutline } from 'ionicons/icons';
-import React from 'react';
+import React, { useState } from 'react';
 
-export const PermitState: React.FC = () => {
+export const RecapPermitAdmin: React.FC = () => {
 	return (
 		<IonPage>
 			<IonHeader>
@@ -29,7 +29,7 @@ export const PermitState: React.FC = () => {
 					<IonButtons slot="start">
 						<IonBackButton></IonBackButton>
 					</IonButtons>
-					<IonTitle>Status Izin</IonTitle>
+					<IonTitle>Rekap Perizinan</IonTitle>
 				</IonToolbar>
 			</IonHeader>
 			<IonContent className="ion-padding">
@@ -40,9 +40,9 @@ export const PermitState: React.FC = () => {
 							fontWeight: '700',
 							marginBottom: '-0.5rem',
 						}}>
-						Mau Lihat Status Izin Kamu?
+						Ada yang Izin nih...
 					</h1>
-					<p>Yuk, lihat dulu status kamu udah disetujuin atau belum!</p>
+					<p>Yuk, tinjau perizinan dari setiap karyawannya!</p>
 				</IonText>
 
 				{['Disetujui', 'Ditolak', 'Sedang Ditinjau'].map((value) => (
@@ -83,6 +83,12 @@ export const PermitState: React.FC = () => {
 								</p>
 							</IonText>
 						</IonCardContent>
+
+						<div style={{ display: 'flex', justifyContent: 'end' }}>
+							<IonRouterLink routerLink={`/recap-permit/${value}`}>
+								<IonButton color="attendify">Lanjut Baca</IonButton>
+							</IonRouterLink>
+						</div>
 					</IonCard>
 				))}
 			</IonContent>

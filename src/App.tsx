@@ -41,6 +41,11 @@ import { CreatePermit } from './pages/CreatePermit';
 import { PermitState } from './pages/PermitState';
 import { Summary } from './pages/Summary';
 import { Profile } from './pages/Profile';
+import { DashboardAdmin } from './pages/DashboardAdmin';
+import { RecapPresentAdmin } from './pages/RecapPresentAdmin';
+import { RecapPresentSummaryAdmin } from './pages/RecapPresentSummaryAdmin';
+import { RecapPermitAdmin } from './pages/RecapPermitAdmin';
+import { RecapPermitDetailAdmin } from './pages/RecapPermitDetailAdmin';
 
 setupIonicReact();
 
@@ -60,12 +65,12 @@ const App: React.FC = () => (
 				</Route>
 				<Route
 					exact
-					path={'/checkin'}>
+					path={'/check-in'}>
 					<CheckIn />
 				</Route>
 				<Route
 					exact
-					path={'/checkout'}>
+					path={'/check-out'}>
 					<CheckOut />
 				</Route>
 				<Route
@@ -92,6 +97,31 @@ const App: React.FC = () => (
 					exact
 					path={'/profile'}>
 					<Profile />
+				</Route>
+				<Route
+					exact
+					path={'/admin-dashboard'}>
+					<DashboardAdmin />
+				</Route>
+				<Route
+					exact
+					path={'/recap-present'}>
+					<RecapPresentAdmin />
+				</Route>
+				<Route
+					exact
+					path={'/recap-present/:id'}>
+					<RecapPresentSummaryAdmin />
+				</Route>
+				<Route
+					exact
+					path={'/recap-permit'}>
+					<RecapPermitAdmin />
+				</Route>
+				<Route
+					exact
+					path={'/recap-permit/:id'}>
+					<RecapPermitDetailAdmin />
 				</Route>
 				<Route
 					exact

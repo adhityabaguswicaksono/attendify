@@ -1,4 +1,5 @@
 import {
+	IonAlert,
 	IonBackButton,
 	IonButton,
 	IonButtons,
@@ -25,6 +26,7 @@ import {
 	send,
 } from 'ionicons/icons';
 import React, { useEffect, useState } from 'react';
+import './style.css';
 
 export const CheckIn: React.FC = () => {
 	const [ctime, setTime] = useState<string>();
@@ -113,6 +115,7 @@ export const CheckIn: React.FC = () => {
 									fontSize: '2.5rem',
 									fontWeight: '700',
 									marginTop: '-2rem',
+									fontVariantNumeric: 'tabular-nums',
 								}}>
 								{ctime}
 							</p>
@@ -141,6 +144,7 @@ export const CheckIn: React.FC = () => {
 				</IonCard>
 
 				<IonButton
+					id="present-alert"
 					color="attendify"
 					className="ion-text-center"
 					style={{
@@ -154,6 +158,61 @@ export const CheckIn: React.FC = () => {
 					/>
 					Kirim
 				</IonButton>
+
+				<IonAlert
+					header="Tunggu!!!"
+					trigger="present-alert"
+					// subHeader="A Sub Header Is Optional"
+					message="Yakin mau kirim Jam Kehadiran Kamu?"
+					buttons={[
+						{
+							text: 'Batal',
+							role: 'cancel',
+							cssClass: 'alert-button-cancel',
+							handler: () => {
+								console.log('Alert canceled');
+							},
+						},
+						{
+							text: 'Kirim',
+							role: 'confirm',
+							cssClass: 'alert-button-confirm',
+							id: 'loading-alert',
+							handler: () => {
+								console.log('Alert confirmed');
+							},
+						},
+					]}
+					onDidDismiss={({ detail }) =>
+						console.log(`Dismissed with role: ${detail.role}`)
+					}></IonAlert>
+
+				<IonAlert
+					header="Yeay"
+					trigger="loading-alert"
+					// subHeader="A Sub Header Is Optional"
+					message="Yakin mau kirim Jam Kehadiran Kamu?"
+					buttons={[
+						{
+							text: 'Batal',
+							role: 'cancel',
+							cssClass: 'alert-button-cancel',
+							handler: () => {
+								console.log('Alert canceled');
+							},
+						},
+						{
+							text: 'Kirim',
+							role: 'confirm',
+							cssClass: 'alert-button-confirm',
+							handler: () => {
+								console.log('Alert confirmed');
+							},
+						},
+					]}
+					onDidDismiss={({ detail }) =>
+						console.log(`Dismissed with role: ${detail.role}`)
+					}></IonAlert>
 			</IonContent>
 		</IonPage>
 	);

@@ -1,10 +1,7 @@
 import {
-	IonButton,
 	IonCard,
 	IonCardContent,
-	IonCardHeader,
 	IonContent,
-	IonHeader,
 	IonIcon,
 	IonImg,
 	IonPage,
@@ -12,38 +9,18 @@ import {
 	IonText,
 } from '@ionic/react';
 import {
-	airplaneOutline,
-	documentTextOutline,
 	logInOutline,
 	logOutOutline,
+	documentTextOutline,
+	airplaneOutline,
 	personOutline,
+	listOutline,
+	peopleOutline,
+	handRightOutline,
 } from 'ionicons/icons';
 import React from 'react';
 
-export const Dashboard: React.FC = () => {
-	const getLocalCalendar = () => {
-		// Step 1:
-		const utcDateString = new Date().toISOString();
-		const utcDateWithoutMillis = utcDateString.slice(0, -5) + 'Z';
-		const utcDate = new Date(utcDateWithoutMillis);
-		// console.log('UTC Date:', utcDate.toISOString());
-
-		// Step 2:
-		const offsetMinutes = utcDate.getTimezoneOffset();
-		// console.log('Time Zone Offset (minutes):', offsetMinutes);
-
-		// Step 3:
-		const localTime = new Date(utcDate.getTime() - offsetMinutes * 60 * 1000);
-		// console.log('Local Time:', localTime.toISOString());
-
-		return utcDate.toLocaleDateString('id', {
-			weekday: 'long',
-			year: 'numeric',
-			month: 'long',
-			day: 'numeric',
-		});
-	};
-
+export const DashboardAdmin: React.FC = () => {
 	const getTime = () => {
 		const utcDateString = new Date().toISOString();
 		const utcDateWithoutMillis = utcDateString.slice(0, -5) + 'Z';
@@ -59,8 +36,6 @@ export const Dashboard: React.FC = () => {
 			return 'Malam';
 		}
 	};
-
-	getLocalCalendar();
 
 	return (
 		<IonPage>
@@ -128,61 +103,6 @@ export const Dashboard: React.FC = () => {
 					</div>
 				</div>
 
-				<IonCard
-					style={{
-						backgroundColor: '#1EC2E6',
-					}}>
-					<IonCardHeader
-						style={{
-							color: 'white',
-						}}>
-						<IonText
-							style={{
-								fontWeight: '700',
-								fontSize: '1.5rem',
-							}}
-							className="ion-text-center">
-							{getLocalCalendar()}
-						</IonText>
-					</IonCardHeader>
-					<IonCardContent
-						style={{
-							width: '100%',
-							display: 'flex',
-							flexDirection: 'row',
-							flexWrap: 'wrap',
-						}}>
-						<IonCard
-							style={{
-								flexGrow: 1,
-							}}
-							className="ion-text-center">
-							<IonCardHeader>
-								<IonText>Jam Masuk</IonText>
-							</IonCardHeader>
-							<IonCardContent>
-								<IonText>
-									<h1>08:00:00</h1>
-								</IonText>
-							</IonCardContent>
-						</IonCard>
-						<IonCard
-							style={{
-								flexGrow: 1,
-							}}
-							className="ion-text-center">
-							<IonCardHeader>
-								<IonText>Jam Keluar</IonText>
-							</IonCardHeader>
-							<IonCardContent>
-								<IonText>
-									<h1>17:00:00</h1>
-								</IonText>
-							</IonCardContent>
-						</IonCard>
-					</IonCardContent>
-				</IonCard>
-
 				<IonCard>
 					<IonCardContent
 						style={{
@@ -195,11 +115,11 @@ export const Dashboard: React.FC = () => {
 							style={{
 								flexGrow: 1,
 							}}>
-							<IonRouterLink routerLink="/check-in">
+							<IonRouterLink routerLink="/recap-present">
 								<IonCardContent className="ion-text-center">
 									<IonText>
 										<p style={{ fontSize: '6rem', color: '#158aa3' }}>
-											<IonIcon icon={logInOutline}></IonIcon>
+											<IonIcon icon={handRightOutline}></IonIcon>
 										</p>
 									</IonText>
 									<IonText>
@@ -209,7 +129,7 @@ export const Dashboard: React.FC = () => {
 												fontSize: '1rem',
 												color: '#1EC2E6',
 											}}>
-											Jam Masuk
+											Rekap Kehadiran
 										</p>
 									</IonText>
 								</IonCardContent>
@@ -220,31 +140,7 @@ export const Dashboard: React.FC = () => {
 							style={{
 								flexGrow: 1,
 							}}>
-							<IonRouterLink routerLink="/check-out">
-								<IonCardContent className="ion-text-center">
-									<IonText>
-										<p style={{ fontSize: '6rem', color: '#158aa3' }}>
-											<IonIcon icon={logOutOutline}></IonIcon>
-										</p>
-									</IonText>
-									<IonText>
-										<p
-											style={{
-												marginTop: '-2rem',
-												fontSize: '1rem',
-												color: '#1EC2E6',
-											}}>
-											Jam Keluar
-										</p>
-									</IonText>
-								</IonCardContent>
-							</IonRouterLink>
-						</IonCard>
-						<IonCard
-							style={{
-								flexGrow: 1,
-							}}>
-							<IonRouterLink routerLink="/summary">
+							<IonRouterLink routerLink="/recap-permit">
 								<IonCardContent className="ion-text-center">
 									<IonText>
 										<p style={{ fontSize: '6rem', color: '#158aa3' }}>
@@ -258,7 +154,31 @@ export const Dashboard: React.FC = () => {
 												fontSize: '1rem',
 												color: '#1EC2E6',
 											}}>
-											Ringkasan
+											Rekap Perizinan
+										</p>
+									</IonText>
+								</IonCardContent>
+							</IonRouterLink>
+						</IonCard>
+						<IonCard
+							style={{
+								flexGrow: 1,
+							}}>
+							<IonRouterLink routerLink="/summary">
+								<IonCardContent className="ion-text-center">
+									<IonText>
+										<p style={{ fontSize: '6rem', color: '#158aa3' }}>
+											<IonIcon icon={peopleOutline}></IonIcon>
+										</p>
+									</IonText>
+									<IonText>
+										<p
+											style={{
+												marginTop: '-2rem',
+												fontSize: '1rem',
+												color: '#1EC2E6',
+											}}>
+											Rekap Profil Akun
 										</p>
 									</IonText>
 								</IonCardContent>
@@ -272,30 +192,6 @@ export const Dashboard: React.FC = () => {
 								<IonCardContent className="ion-text-center">
 									<IonText>
 										<p style={{ fontSize: '6rem', color: '#158aa3' }}>
-											<IonIcon icon={airplaneOutline}></IonIcon>
-										</p>
-									</IonText>
-									<IonText>
-										<p
-											style={{
-												marginTop: '-2rem',
-												fontSize: '1rem',
-												color: '#1EC2E6',
-											}}>
-											Perizinan
-										</p>
-									</IonText>
-								</IonCardContent>
-							</IonRouterLink>
-						</IonCard>
-						<IonCard
-							style={{
-								flexGrow: 1,
-							}}>
-							<IonRouterLink routerLink="/profile">
-								<IonCardContent className="ion-text-center">
-									<IonText>
-										<p style={{ fontSize: '6rem', color: '#158aa3' }}>
 											<IonIcon icon={personOutline}></IonIcon>
 										</p>
 									</IonText>
@@ -306,7 +202,7 @@ export const Dashboard: React.FC = () => {
 												fontSize: '1rem',
 												color: '#1EC2E6',
 											}}>
-											Akun
+											Profil Akun
 										</p>
 									</IonText>
 								</IonCardContent>

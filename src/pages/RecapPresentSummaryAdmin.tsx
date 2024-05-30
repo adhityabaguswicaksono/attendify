@@ -2,6 +2,7 @@ import {
 	IonAccordion,
 	IonAccordionGroup,
 	IonBackButton,
+	IonButton,
 	IonButtons,
 	IonContent,
 	IonHeader,
@@ -9,12 +10,16 @@ import {
 	IonItemDivider,
 	IonLabel,
 	IonPage,
+	IonRouterLink,
 	IonText,
 	IonTitle,
 	IonToolbar,
 } from '@ionic/react';
+import { useParams } from 'react-router';
 
-export const Summary: React.FC = () => {
+export const RecapPresentSummaryAdmin: React.FC = () => {
+	let { id } = useParams<{ id: string }>();
+
 	return (
 		<IonPage>
 			<IonHeader>
@@ -26,25 +31,31 @@ export const Summary: React.FC = () => {
 					<IonButtons slot="start">
 						<IonBackButton></IonBackButton>
 					</IonButtons>
-					<IonTitle>Ringkasan</IonTitle>
+					<IonTitle>Rekap Kehadiran</IonTitle>
 				</IonToolbar>
 			</IonHeader>
 			<IonContent className="ion-padding">
-				<IonText color="attendify">
+				<IonText
+					color="attendify"
+					className="ion-text-center">
 					<h1
 						style={{
 							fontSize: '2rem',
 							fontWeight: '700',
 							marginBottom: '-0.5rem',
 						}}>
-						Mau Lihat Berapa Kali Nggak Masuk ya?
+						John Doe
 					</h1>
-					<p>Yuk! Tinjau di sini. Jangan sampe kebanyakan ngilang ya...</p>
+					<p>
+						Profesi <br /> Divisi
+					</p>
 				</IonText>
 
 				<IonAccordionGroup>
 					{['Mei', 'April', 'Maret'].map((value) => (
-						<IonAccordion value={value}>
+						<IonAccordion
+							key={value}
+							value={value}>
 							<IonItem
 								slot="header"
 								color="attendify">

@@ -1,0 +1,8 @@
+button.alert-button.alert-button-cancel { 
+	color: red;
+}
+
+button.alert-button.alert-button-confirm {
+	color: white;
+	background-color: blue;
+}
