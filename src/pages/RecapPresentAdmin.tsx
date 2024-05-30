@@ -13,6 +13,7 @@ import {
 	IonLabel,
 	IonRouterLink,
 	IonIcon,
+	IonButton,
 } from '@ionic/react';
 import { arrowUpRightBoxOutline, linkOutline } from 'ionicons/icons';
 
@@ -50,13 +51,12 @@ export const RecapPresentAdmin: React.FC = () => {
 							key={value}
 							routerLink={`recap-present/${value}`}>
 							<IonItem>
-								<IonLabel>
-									John Doe{' '}
-									<IonIcon
-										icon={arrowUpRightBoxOutline}
-										style={{ marginLeft: '0.5rem' }}
-									/>
+								<IonLabel class="ion-text-wrap">
+									<span style={{ fontWeight: 700 }}>John Doe</span>
+									<br />
+									Divisi - Posisi
 								</IonLabel>
+								<IonIcon icon={arrowUpRightBoxOutline} />
 							</IonItem>
 						</IonRouterLink>
 					))}

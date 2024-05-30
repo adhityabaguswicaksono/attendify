@@ -46,6 +46,10 @@ import { RecapPresentAdmin } from './pages/RecapPresentAdmin';
 import { RecapPresentSummaryAdmin } from './pages/RecapPresentSummaryAdmin';
 import { RecapPermitAdmin } from './pages/RecapPermitAdmin';
 import { RecapPermitDetailAdmin } from './pages/RecapPermitDetailAdmin';
+import { ProfileAdmin } from './pages/ProfileAdmin';
+import { RecapAccountAdmin } from './pages/RecapAccountAdmin';
+import { CreateAccountAdmin } from './pages/CreateAccountAdmin';
+import { UpdateAccountAdmin } from './pages/UpdateAccountAdmin';
 
 setupIonicReact();
 
@@ -122,6 +126,26 @@ const App: React.FC = () => (
 					exact
 					path={'/recap-permit/:id'}>
 					<RecapPermitDetailAdmin />
+				</Route>
+				<Route
+					exact
+					path={'/recap-account'}>
+					<RecapAccountAdmin />
+				</Route>
+				<Route
+					exact
+					path={'/recap-account/create-account'}>
+					<CreateAccountAdmin />
+				</Route>
+				<Route
+					exact
+					path={'/recap-account/update-account/:id'}>
+					<UpdateAccountAdmin />
+				</Route>
+				<Route
+					exact
+					path={'/admin-profile'}>
+					<ProfileAdmin />
 				</Route>
 				<Route
 					exact

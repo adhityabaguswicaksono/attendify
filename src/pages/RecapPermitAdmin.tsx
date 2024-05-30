@@ -42,7 +42,7 @@ export const RecapPermitAdmin: React.FC = () => {
 						}}>
 						Ada yang Izin nih...
 					</h1>
-					<p>Yuk, tinjau perizinan dari setiap karyawannya!</p>
+					<p>Yuk, tinjau perizinan dari setiap karyawannya di sini!</p>
 				</IonText>
 
 				{['Disetujui', 'Ditolak', 'Sedang Ditinjau'].map((value) => (

@@ -164,7 +164,7 @@ export const DashboardAdmin: React.FC = () => {
 							style={{
 								flexGrow: 1,
 							}}>
-							<IonRouterLink routerLink="/summary">
+							<IonRouterLink routerLink="/recap-account">
 								<IonCardContent className="ion-text-center">
 									<IonText>
 										<p style={{ fontSize: '6rem', color: '#158aa3' }}>
@@ -188,7 +188,7 @@ export const DashboardAdmin: React.FC = () => {
 							style={{
 								flexGrow: 1,
 							}}>
-							<IonRouterLink routerLink="/permit">
+							<IonRouterLink routerLink="/admin-profile">
 								<IonCardContent className="ion-text-center">
 									<IonText>
 										<p style={{ fontSize: '6rem', color: '#158aa3' }}>
@@ -202,7 +202,7 @@ export const DashboardAdmin: React.FC = () => {
 												fontSize: '1rem',
 												color: '#1EC2E6',
 											}}>
-											Profil Akun
+											Profil Akun Admin
 										</p>
 									</IonText>
 								</IonCardContent>

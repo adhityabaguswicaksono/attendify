@@ -9,6 +9,10 @@ import {
 	IonText,
 	IonButton,
 	IonRouterLink,
+	IonCard,
+	IonCardContent,
+	IonItemGroup,
+	IonItem,
 } from '@ionic/react';
 
 export const RecapPermitDetailAdmin: React.FC = () => {
@@ -43,41 +47,45 @@ export const RecapPermitDetailAdmin: React.FC = () => {
 					</p>
 				</IonText>
 
-				<div>
-					<IonText>
-						<p style={{ fontWeight: 700, marginBottom: '-1rem' }}>
-							Divisi Pekerjaan
-						</p>
-						<p>Information Technology</p>
-					</IonText>
-					<IonText>
-						<p style={{ fontWeight: 700, marginBottom: '-1rem' }}>
-							Posisi Pekerjaan
-						</p>
-						<p>Front End Website Developer</p>
-					</IonText>
-					<IonText>
-						<p style={{ fontWeight: 700, marginBottom: '-1rem' }}>
-							Alamat Surel
-						</p>
-						<p>john.doe@mail.com</p>
-					</IonText>
-					<IonText>
-						<p style={{ fontWeight: 700, marginBottom: '-1rem' }}>
-							Nomor Telepon
-						</p>
-						<p>+6201234567890</p>
-					</IonText>
-					<IonText>
-						<p style={{ fontWeight: 700, marginBottom: '-1rem' }}>
-							Alamat Rumah
-						</p>
-						<p>
-							Jalan Scientia Boulevard Gading, Curug Sangereng, Serpong,
-							Kabupaten Tangerang, Banten 15810
-						</p>
-					</IonText>
-				</div>
+				<IonCard>
+					<IonCardContent>
+						<IonItemGroup>
+							<IonItem>
+								<IonText>
+									<p style={{ fontWeight: 700 }}>Divisi Pekerjaan</p>
+									<p>Information Technology</p>
+								</IonText>
+							</IonItem>
+							<IonItem>
+								<IonText>
+									<p style={{ fontWeight: 700 }}>Posisi Pekerjaan</p>
+									<p>Front End Website Developer</p>
+								</IonText>
+							</IonItem>
+							<IonItem>
+								<IonText>
+									<p style={{ fontWeight: 700 }}>Alamat Surel</p>
+									<p>john.doe@mail.com</p>
+								</IonText>
+							</IonItem>
+							<IonItem>
+								<IonText>
+									<p style={{ fontWeight: 700 }}>Nomor Telepon</p>
+									<p>+6201234567890</p>
+								</IonText>
+							</IonItem>
+							<IonItem>
+								<IonText>
+									<p style={{ fontWeight: 700 }}>Alamat Rumah</p>
+									<p>
+										Jalan Scientia Boulevard Gading, Curug Sangereng, Serpong,
+										Kabupaten Tangerang, Banten 15810
+									</p>
+								</IonText>
+							</IonItem>
+						</IonItemGroup>
+					</IonCardContent>
+				</IonCard>
 
 				<div
 					style={{
