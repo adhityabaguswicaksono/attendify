@@ -34,6 +34,13 @@ import '@ionic/react/css/palettes/dark.system.css';
 import './theme/variables.css';
 import Login from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
+import { CheckIn } from './pages/CheckIn';
+import { CheckOut } from './pages/CheckOut';
+import { Permit } from './pages/Permit';
+import { CreatePermit } from './pages/CreatePermit';
+import { PermitState } from './pages/PermitState';
+import { Summary } from './pages/Summary';
+import { Profile } from './pages/Profile';
 
 setupIonicReact();
 
@@ -50,6 +57,41 @@ const App: React.FC = () => (
 					exact
 					path={'/dashboard'}>
 					<Dashboard />
+				</Route>
+				<Route
+					exact
+					path={'/checkin'}>
+					<CheckIn />
+				</Route>
+				<Route
+					exact
+					path={'/checkout'}>
+					<CheckOut />
+				</Route>
+				<Route
+					exact
+					path={'/permit'}>
+					<Permit />
+				</Route>
+				<Route
+					exact
+					path={'/permit/create-permit'}>
+					<CreatePermit />
+				</Route>
+				<Route
+					exact
+					path={'/permit/permit-state'}>
+					<PermitState />
+				</Route>
+				<Route
+					exact
+					path={'/summary'}>
+					<Summary />
+				</Route>
+				<Route
+					exact
+					path={'/profile'}>
+					<Profile />
 				</Route>
 				<Route
 					exact

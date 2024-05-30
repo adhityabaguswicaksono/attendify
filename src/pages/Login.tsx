@@ -11,6 +11,7 @@ import {
 	IonInput,
 	IonInputPasswordToggle,
 	IonItem,
+	IonItemGroup,
 	IonPage,
 	IonSelect,
 	IonSelectOption,
@@ -23,7 +24,6 @@ const Login: React.FC = () => {
 			<IonContent fullscreen>
 				<IonCard
 					style={{
-						// textAlign: 'center',
 						position: 'absolute',
 						left: 0,
 						right: 0,
@@ -43,31 +43,41 @@ const Login: React.FC = () => {
 							}}
 							class="ion-padding"></IonImg>
 
-						<div
-							style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-							<IonInput
-								label="Alamat Surel"
-								labelPlacement="stacked"
-								type="email"
-								placeholder="john.doe@mail.com"></IonInput>
-							<IonInput
-								label="Alamat Surel"
-								labelPlacement="stacked"
-								type="password"
-								placeholder="••••••••••">
-								<IonInputPasswordToggle slot="end"></IonInputPasswordToggle>
-							</IonInput>
-							<IonSelect
-								label="Nama Perusahaan"
-								labelPlacement="stacked"
-								defaultValue="Pilih Perusahaan">
-								<IonSelectOption value="apple">Apple</IonSelectOption>
-								<IonSelectOption value="banana">Banana</IonSelectOption>
-								<IonSelectOption value="orange">Orange</IonSelectOption>
-							</IonSelect>
-						</div>
+						<IonItemGroup>
+							<IonItem>
+								<IonInput
+									color="attendify"
+									label="Alamat Surel"
+									labelPlacement="stacked"
+									type="email"
+									placeholder="john.doe@mail.com"></IonInput>
+							</IonItem>
+							<IonItem>
+								<IonInput
+									color="attendify"
+									label="Kata Sandi"
+									labelPlacement="stacked"
+									type="password"
+									placeholder="••••••••••">
+									<IonInputPasswordToggle
+										slot="end"
+										color="attendify"></IonInputPasswordToggle>
+								</IonInput>
+							</IonItem>
+							<IonItem>
+								<IonSelect
+									color="attendify"
+									label="Nama Perusahaan"
+									labelPlacement="stacked"
+									defaultValue="Pilih Perusahaan">
+									<IonSelectOption value="apple">Apple</IonSelectOption>
+									<IonSelectOption value="banana">Banana</IonSelectOption>
+									<IonSelectOption value="orange">Orange</IonSelectOption>
+								</IonSelect>
+							</IonItem>
+						</IonItemGroup>
 
-						<IonButton>Masuk</IonButton>
+						<IonButton color="attendify">Masuk</IonButton>
 					</IonCardContent>
 				</IonCard>
 			</IonContent>

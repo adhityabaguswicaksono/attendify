@@ -1,2 +1,27 @@
 /* For information on how to create your own theme, please see:
 http://ionicframework.com/docs/theming/ */
+
+@font-face {
+    font-family: "Outfit";
+    src: url("/assets/fonts/outfit.ttf");
+}
+
+:root {
+    --ion-default-font: "Outfit", sans-serif !important;
+    
+	--ion-color-attendify: #1ec2e6;
+	--ion-color-attendify-rgb: 30,194,230;
+	--ion-color-attendify-contrast: #000000;
+	--ion-color-attendify-contrast-rgb: 0,0,0;
+	--ion-color-attendify-shade: #1aabca;
+	--ion-color-attendify-tint: #35c8e9;
+}
+
+.ion-color-attendify {
+	--ion-color-base: var(--ion-color-attendify);
+	--ion-color-base-rgb: var(--ion-color-attendify-rgb);
+	--ion-color-contrast: var(--ion-color-attendify-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-attendify-contrast-rgb);
+	--ion-color-shade: var(--ion-color-attendify-shade);
+	--ion-color-tint: var(--ion-color-attendify-tint);
+}
