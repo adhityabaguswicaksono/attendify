@@ -22,9 +22,101 @@ import {
 	IonSelectOption,
 	IonTextarea,
 } from '@ionic/react';
+import {
+	createUserWithEmailAndPassword,
+	signOut,
+	updateProfile,
+} from 'firebase/auth';
 import { arrowUpRightBoxOutline, linkOutline, send } from 'ionicons/icons';
+import { auth, db } from '../utils/firebase';
+import { useRef, useState } from 'react';
+import { doc, setDoc } from 'firebase/firestore';
+import { useHistory } from 'react-router';
 
 export const CreateAccountAdmin: React.FC = () => {
+	// const emailRef = useRef<HTMLIonInputElement>(null);
+	// const passwordRef = useRef<HTMLIonInputElement>(null);
+	const [nama, setNama] = useState('');
+	const [divisi, setDivisi] = useState('');
+	const [posisi, setPosisi] = useState('');
+	const [telepon, setTelepon] = useState('');
+	const [surel, setSurel] = useState('');
+	const [alamat, setAlamat] = useState('');
+	const [role, setRole] = useState('');
+	const [sandi, setSandi] = useState(generatePassword());
+	const history = useHistory();
+
+	const createUser = async (email: any, password: any) => {
+		if (
+			nama &&
+			divisi &&
+			posisi &&
+			telepon &&
+			surel &&
+			alamat &&
+			sandi &&
+			role
+		) {
+			await setDoc(
+				doc(db, 'Universitas Multimedia Nusantara', 'User', 'User', email),
+				{
+					nama: nama,
+					divisi: divisi,
+					posisi: posisi,
+					telepon: telepon,
+					alamat: alamat,
+					role: role,
+					surel: surel,
+				}
+			);
+
+			const user = await createUserWithEmailAndPassword(auth, email, password);
+			updateProfile(user.user, { displayName: nama });
+			signOut(auth);
+
+			history.goBack();
+		} else {
+			console.log('Gagal');
+			return;
+		}
+	};
+
+	function generatePassword(): string {
+		const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+		const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		const numbers = '0123456789';
+		const specialCharacters = '!@#$%^&*()_+~`|}{[]:;?><,./-=';
+
+		const allCharacters = lowercase + uppercase + numbers + specialCharacters;
+		const passwordLength = 12;
+
+		let password = '';
+
+		// Ensure at least one character from each set is included
+		password += lowercase[Math.floor(Math.random() * lowercase.length)];
+		password += uppercase[Math.floor(Math.random() * uppercase.length)];
+		password += numbers[Math.floor(Math.random() * numbers.length)];
+		password +=
+			specialCharacters[Math.floor(Math.random() * specialCharacters.length)];
+
+		// Fill the rest of the password length
+		for (let i = password.length; i < passwordLength; i++) {
+			const randomIndex = Math.floor(Math.random() * allCharacters.length);
+			password += allCharacters[randomIndex];
+		}
+
+		// Shuffle the password to ensure randomness
+		password = password
+			.split('')
+			.sort(() => 0.5 - Math.random())
+			.join('');
+
+		return password;
+	}
+
+	// Example usage:
+	// console.log(generatePassword());
+
 	return (
 		<IonPage>
 			<IonHeader>
@@ -61,7 +153,10 @@ export const CreateAccountAdmin: React.FC = () => {
 									type="text"
 									label="Nama Lengkap"
 									labelPlacement="stacked"
-									placeholder="John Doe"></IonInput>
+									placeholder="John Doe"
+									onIonInput={(e: any) => {
+										setNama(e.target.value);
+									}}></IonInput>
 							</IonItem>
 							<IonItem>
 								<IonInput
@@ -69,7 +164,10 @@ export const CreateAccountAdmin: React.FC = () => {
 									type="text"
 									label="Divisi"
 									labelPlacement="stacked"
-									placeholder="Information Technology"></IonInput>
+									placeholder="Information Technology"
+									onIonInput={(e: any) => {
+										setDivisi(e.target.value);
+									}}></IonInput>
 							</IonItem>
 							<IonItem>
 								<IonInput
@@ -77,7 +175,10 @@ export const CreateAccountAdmin: React.FC = () => {
 									type="text"
 									label="Posisi"
 									labelPlacement="stacked"
-									placeholder="Front End Website Developer"></IonInput>
+									placeholder="Front End Website Developer"
+									onIonInput={(e: any) => {
+										setPosisi(e.target.value);
+									}}></IonInput>
 							</IonItem>
 							<IonItem>
 								<IonInput
@@ -85,7 +186,10 @@ export const CreateAccountAdmin: React.FC = () => {
 									type="tel"
 									label="Nomor Telepon"
 									labelPlacement="stacked"
-									placeholder="0987654321"></IonInput>
+									placeholder="0987654321"
+									onIonInput={(e: any) => {
+										setTelepon(e.target.value);
+									}}></IonInput>
 							</IonItem>
 							<IonItem>
 								<IonInput
@@ -93,7 +197,10 @@ export const CreateAccountAdmin: React.FC = () => {
 									type="email"
 									label="Alamat Surel"
 									labelPlacement="stacked"
-									placeholder="john.doe@mail.com"></IonInput>
+									placeholder="john.doe@mail.com"
+									onIonInput={(e: any) => {
+										setSurel(e.target.value);
+									}}></IonInput>
 							</IonItem>
 							<IonItem>
 								<IonInput
@@ -101,20 +208,32 @@ export const CreateAccountAdmin: React.FC = () => {
 									type="text"
 									label="Kata Sandi"
 									labelPlacement="stacked"
-									placeholder="••••••••••"></IonInput>
+									placeholder="••••••••••"
+									value={sandi}
+									disabled
+									// onIonInput={(e: any) => {
+									// 	setSandi(generatePassword());
+									// }}
+								></IonInput>
 							</IonItem>
 							<IonItem>
 								<IonTextarea
 									color="attendify"
 									label="Alamat"
-									labelPlacement="stacked"></IonTextarea>
+									labelPlacement="stacked"
+									onIonInput={(e: any) => {
+										setAlamat(e.target.value);
+									}}></IonTextarea>
 							</IonItem>
 							<IonItem>
 								<IonSelect
 									color="attendify"
 									label="Peran Akun"
 									placeholder="Admin / User"
-									labelPlacement="stacked">
+									labelPlacement="stacked"
+									onIonChange={(e: any) => {
+										setRole(e.target.value);
+									}}>
 									{['Admin', 'User'].map((value) => (
 										<IonSelectOption
 											key={value}
@@ -134,6 +253,9 @@ export const CreateAccountAdmin: React.FC = () => {
 					className="ion-text-center"
 					style={{
 						width: '100%',
+					}}
+					onClick={() => {
+						createUser(surel, sandi);
 					}}>
 					<IonIcon
 						icon={send}

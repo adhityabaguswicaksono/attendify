@@ -1,4 +1,4 @@
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, useHistory } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
@@ -50,116 +50,119 @@ import { ProfileAdmin } from './pages/ProfileAdmin';
 import { RecapAccountAdmin } from './pages/RecapAccountAdmin';
 import { CreateAccountAdmin } from './pages/CreateAccountAdmin';
 import { UpdateAccountAdmin } from './pages/UpdateAccountAdmin';
+import { auth } from './utils/firebase';
 
 setupIonicReact();
 
-const App: React.FC = () => (
-	<IonApp>
-		<IonReactRouter>
-			<IonRouterOutlet>
-				<Route
-					exact
-					path={'/login'}>
-					<Login />
-				</Route>
-				<Route
-					exact
-					path={'/dashboard'}>
-					<Dashboard />
-				</Route>
-				<Route
-					exact
-					path={'/check-in'}>
-					<CheckIn />
-				</Route>
-				<Route
-					exact
-					path={'/check-out'}>
-					<CheckOut />
-				</Route>
-				<Route
-					exact
-					path={'/permit'}>
-					<Permit />
-				</Route>
-				<Route
-					exact
-					path={'/permit/create-permit'}>
-					<CreatePermit />
-				</Route>
-				<Route
-					exact
-					path={'/permit/permit-state'}>
-					<PermitState />
-				</Route>
-				<Route
-					exact
-					path={'/summary'}>
-					<Summary />
-				</Route>
-				<Route
-					exact
-					path={'/profile'}>
-					<Profile />
-				</Route>
-				<Route
-					exact
-					path={'/admin-dashboard'}>
-					<DashboardAdmin />
-				</Route>
-				<Route
-					exact
-					path={'/recap-present'}>
-					<RecapPresentAdmin />
-				</Route>
-				<Route
-					exact
-					path={'/recap-present/:id'}>
-					<RecapPresentSummaryAdmin />
-				</Route>
-				<Route
-					exact
-					path={'/recap-permit'}>
-					<RecapPermitAdmin />
-				</Route>
-				<Route
-					exact
-					path={'/recap-permit/:id'}>
-					<RecapPermitDetailAdmin />
-				</Route>
-				<Route
-					exact
-					path={'/recap-account'}>
-					<RecapAccountAdmin />
-				</Route>
-				<Route
-					exact
-					path={'/recap-account/create-account'}>
-					<CreateAccountAdmin />
-				</Route>
-				<Route
-					exact
-					path={'/recap-account/update-account/:id'}>
-					<UpdateAccountAdmin />
-				</Route>
-				<Route
-					exact
-					path={'/admin-profile'}>
-					<ProfileAdmin />
-				</Route>
-				<Route
-					exact
-					path="/home">
-					<Home />
-				</Route>
-				<Route
-					exact
-					path="/">
-					<Redirect to="/home" />
-				</Route>
-			</IonRouterOutlet>
-		</IonReactRouter>
-	</IonApp>
-);
+const App: React.FC = () => {
+	return (
+		<IonApp>
+			<IonReactRouter>
+				<IonRouterOutlet>
+					<Route
+						exact
+						path={'/login'}>
+						<Login />
+					</Route>
+					<Route
+						exact
+						path={'/dashboard'}>
+						<Dashboard />
+					</Route>
+					<Route
+						exact
+						path={'/check-in'}>
+						<CheckIn />
+					</Route>
+					<Route
+						exact
+						path={'/check-out'}>
+						<CheckOut />
+					</Route>
+					<Route
+						exact
+						path={'/permit'}>
+						<Permit />
+					</Route>
+					<Route
+						exact
+						path={'/permit/create-permit'}>
+						<CreatePermit />
+					</Route>
+					<Route
+						exact
+						path={'/permit/permit-state'}>
+						<PermitState />
+					</Route>
+					<Route
+						exact
+						path={'/summary'}>
+						<Summary />
+					</Route>
+					<Route
+						exact
+						path={'/profile'}>
+						<Profile />
+					</Route>
+					<Route
+						exact
+						path={'/admin-dashboard'}>
+						<DashboardAdmin />
+					</Route>
+					<Route
+						exact
+						path={'/recap-present'}>
+						<RecapPresentAdmin />
+					</Route>
+					<Route
+						exact
+						path={'/recap-present/:id'}>
+						<RecapPresentSummaryAdmin />
+					</Route>
+					<Route
+						exact
+						path={'/recap-permit'}>
+						<RecapPermitAdmin />
+					</Route>
+					<Route
+						exact
+						path={'/recap-permit/:id'}>
+						<RecapPermitDetailAdmin />
+					</Route>
+					<Route
+						exact
+						path={'/recap-account'}>
+						<RecapAccountAdmin />
+					</Route>
+					<Route
+						exact
+						path={'/recap-account/create-account'}>
+						<CreateAccountAdmin />
+					</Route>
+					<Route
+						exact
+						path={'/recap-account/update-account/:id'}>
+						<UpdateAccountAdmin />
+					</Route>
+					<Route
+						exact
+						path={'/admin-profile'}>
+						<ProfileAdmin />
+					</Route>
+					<Route
+						exact
+						path="/home">
+						<Home />
+					</Route>
+					<Route
+						exact
+						path="/">
+						<Redirect to="/home" />
+					</Route>
+				</IonRouterOutlet>
+			</IonReactRouter>
+		</IonApp>
+	);
+};
 
 export default App;

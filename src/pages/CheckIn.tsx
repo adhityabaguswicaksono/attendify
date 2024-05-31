@@ -27,9 +27,42 @@ import {
 } from 'ionicons/icons';
 import React, { useEffect, useState } from 'react';
 import './style.css';
+import { useHistory } from 'react-router-dom';
+import { auth, db } from '../utils/firebase';
+import { getDoc, doc, setDoc } from 'firebase/firestore';
 
 export const CheckIn: React.FC = () => {
+	const history = useHistory();
+	const [profile, setProfile] = useState<any>('');
+	const [lokasiMasuk, setLokasiMasuk] = useState<any>('');
 	const [ctime, setTime] = useState<string>();
+
+	const getIn = async () => {
+		await setDoc(
+			doc(
+				db,
+				JSON.parse(String(localStorage.getItem('profile'))).perusahaan,
+				'User',
+				'User',
+				JSON.parse(String(localStorage.getItem('profile'))).surel,
+				'Kehadiran',
+				'Kehadiran',
+				getLocalCalendar().toLocaleDateString('id', {
+					year: 'numeric',
+					month: 'long',
+				}),
+				// getLocalCalendar().toLocaleDateString('id', {
+				// 	year: 'numeric',
+				// 	month: 'long',
+				// }),
+				getLocalCalendar().toLocaleDateString('id', { day: 'numeric' })
+			),
+			{
+				jamMasuk: ctime,
+				lokasiMasuk: lokasiMasuk,
+			}
+		);
+	};
 
 	const getLocalCalendar = () => {
 		// Step 1:
@@ -38,16 +71,7 @@ export const CheckIn: React.FC = () => {
 		const utcDate = new Date(utcDateWithoutMillis);
 		// console.log('UTC Date:', utcDate.toISOString());
 
-		// Step 2:
-		const offsetMinutes = utcDate.getTimezoneOffset();
-		// console.log('Time Zone Offset (minutes):', offsetMinutes);
-
-		// Step 3:
-		const localTime = new Date(utcDate.getTime() - offsetMinutes * 60 * 1000);
-		// console.log('Local Time:', localTime.toISOString());
-
-		return localTime;
-		// console.info(utcDateWithoutMillis);
+		return utcDate;
 	};
 
 	const UpdateTime = () => {
@@ -63,6 +87,20 @@ export const CheckIn: React.FC = () => {
 	};
 
 	setInterval(UpdateTime, 1000);
+
+	useState(() => {
+		const authentication = auth.onAuthStateChanged(async (user) => {
+			if (user) {
+				setProfile(JSON.parse(String(localStorage.getItem('profile'))));
+				navigator.geolocation.getCurrentPosition((c) => {
+					setLokasiMasuk({ lat: c.coords.latitude, long: c.coords.longitude });
+				});
+			} else {
+				history.push('/login');
+			}
+		});
+		return authentication;
+	}, []);
 
 	return (
 		<IonPage>
@@ -89,12 +127,14 @@ export const CheckIn: React.FC = () => {
 						Ciee...
 					</h1>
 					<p
-						style={{
-							marginBottom: '-0.5rem',
-						}}>
+						style={
+							{
+								// marginBottom: '-0.5rem',
+							}
+						}>
 						Ada yang baru hadir nih!
 					</p>
-					<p>Ambil foto dulu yuk. Jangan lupa nyalain GPSnya...</p>
+					{/* <p>Ambil foto dulu yuk. Jangan lupa nyalain GPSnya...</p> */}
 				</IonText>
 
 				<IonCard
@@ -123,7 +163,7 @@ export const CheckIn: React.FC = () => {
 					</IonCardContent>
 				</IonCard>
 
-				<IonCard>
+				{/* <IonCard>
 					<IonCardContent className="ion-text-center">
 						<IonImg
 							src="https://i.pinimg.com/736x/1d/d8/1e/1dd81e7616e52ae56a56b3974b952172.jpg"
@@ -135,13 +175,12 @@ export const CheckIn: React.FC = () => {
 							color="attendify"
 							size="large"
 							className="ion-padding">
-							{/* Foto */}
 							<IonIcon
 								slot="icon-only"
 								icon={camera}></IonIcon>
 						</IonButton>
 					</IonCardContent>
-				</IonCard>
+				</IonCard> */}
 
 				<IonButton
 					id="present-alert"
@@ -169,9 +208,6 @@ export const CheckIn: React.FC = () => {
 							text: 'Batal',
 							role: 'cancel',
 							cssClass: 'alert-button-cancel',
-							handler: () => {
-								console.log('Alert canceled');
-							},
 						},
 						{
 							text: 'Kirim',
@@ -179,34 +215,26 @@ export const CheckIn: React.FC = () => {
 							cssClass: 'alert-button-confirm',
 							id: 'loading-alert',
 							handler: () => {
-								console.log('Alert confirmed');
+								// console.log('Alert confirmed');
+								getIn();
 							},
 						},
-					]}
-					onDidDismiss={({ detail }) =>
-						console.log(`Dismissed with role: ${detail.role}`)
-					}></IonAlert>
+					]}></IonAlert>
 
 				<IonAlert
 					header="Yeay"
 					trigger="loading-alert"
 					// subHeader="A Sub Header Is Optional"
-					message="Yakin mau kirim Jam Kehadiran Kamu?"
+					message="Jam Kehadiran Kamu sudah di data. Semangat sampai sore, Kawan!!!"
 					buttons={[
 						{
-							text: 'Batal',
-							role: 'cancel',
-							cssClass: 'alert-button-cancel',
-							handler: () => {
-								console.log('Alert canceled');
-							},
-						},
-						{
-							text: 'Kirim',
+							text: 'Selesai',
 							role: 'confirm',
 							cssClass: 'alert-button-confirm',
 							handler: () => {
-								console.log('Alert confirmed');
+								// console.log('Alert confirmed');
+								// getIn();
+								history.goBack();
 							},
 						},
 					]}

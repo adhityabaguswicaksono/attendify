@@ -18,9 +18,42 @@ import {
 	logOutOutline,
 	personOutline,
 } from 'ionicons/icons';
-import React from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router';
+import { auth, db } from '../utils/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import { getDoc, doc } from 'firebase/firestore';
 
 export const Dashboard: React.FC = () => {
+	const history = useHistory();
+	const [profile, setProfile] = useState<any>('');
+	const [clock, setClock] = useState<any>('');
+
+	const getClock = async () => {
+		const clock = await getDoc(
+			doc(
+				db,
+				JSON.parse(String(localStorage.getItem('profile'))).perusahaan,
+				'User',
+				'User',
+				JSON.parse(String(localStorage.getItem('profile'))).surel,
+				'Kehadiran',
+				'Kehadiran',
+				getLocalCalendar().toLocaleDateString('id', {
+					year: 'numeric',
+					month: 'long',
+				}),
+				// getLocalCalendar().toLocaleDateString('id', {
+				// 	year: 'numeric',
+				// 	month: 'long',
+				// }),
+				getLocalCalendar().toLocaleDateString('id', { day: 'numeric' })
+			)
+		);
+
+		setClock(clock.data());
+	};
+
 	const getLocalCalendar = () => {
 		// Step 1:
 		const utcDateString = new Date().toISOString();
@@ -36,12 +69,7 @@ export const Dashboard: React.FC = () => {
 		const localTime = new Date(utcDate.getTime() - offsetMinutes * 60 * 1000);
 		// console.log('Local Time:', localTime.toISOString());
 
-		return utcDate.toLocaleDateString('id', {
-			weekday: 'long',
-			year: 'numeric',
-			month: 'long',
-			day: 'numeric',
-		});
+		return utcDate;
 	};
 
 	const getTime = () => {
@@ -60,7 +88,23 @@ export const Dashboard: React.FC = () => {
 		}
 	};
 
-	getLocalCalendar();
+	useState(() => {
+		const authentication = auth.onAuthStateChanged(async (user) => {
+			if (user) {
+				setProfile(JSON.parse(String(localStorage.getItem('profile'))));
+				getLocalCalendar();
+				// getClock();
+			} else {
+				history.push('/login');
+			}
+		});
+
+		return authentication;
+	}, []);
+
+	useState(() => {
+		getClock();
+	}, [clock]);
 
 	return (
 		<IonPage>
@@ -103,14 +147,14 @@ export const Dashboard: React.FC = () => {
 									style={{
 										fontWeight: '900',
 									}}>
-									John Doe
+									{profile.nama}
 								</h1>
 							</IonText>
 							<IonText>
-								<p>Front End Website Developer</p>
+								<p>{profile.posisi}</p>
 							</IonText>
 							<IonText>
-								<p>Universitas Multimedia Nusantara</p>
+								<p>{profile.perusahaan}</p>
 							</IonText>
 						</div>
 
@@ -142,7 +186,12 @@ export const Dashboard: React.FC = () => {
 								fontSize: '1.5rem',
 							}}
 							className="ion-text-center">
-							{getLocalCalendar()}
+							{getLocalCalendar().toLocaleDateString('id', {
+								weekday: 'long',
+								year: 'numeric',
+								month: 'long',
+								day: 'numeric',
+							})}
 						</IonText>
 					</IonCardHeader>
 					<IonCardContent
@@ -162,7 +211,7 @@ export const Dashboard: React.FC = () => {
 							</IonCardHeader>
 							<IonCardContent>
 								<IonText>
-									<h1>08:00:00</h1>
+									<h1>{typeof clock === 'object' && clock.jamMasuk}</h1>
 								</IonText>
 							</IonCardContent>
 						</IonCard>
@@ -176,7 +225,7 @@ export const Dashboard: React.FC = () => {
 							</IonCardHeader>
 							<IonCardContent>
 								<IonText>
-									<h1>17:00:00</h1>
+									<h1>{typeof clock === 'object' && clock.jamKeluar}</h1>
 								</IonText>
 							</IonCardContent>
 						</IonCard>

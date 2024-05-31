@@ -11,9 +11,42 @@ import {
 	IonTitle,
 	IonToolbar,
 } from '@ionic/react';
-import React from 'react';
+import { signOut } from 'firebase/auth';
+import React, { useState } from 'react';
+import { auth } from '../utils/firebase';
+import { useHistory } from 'react-router-dom';
 
 export const ProfileAdmin: React.FC = () => {
+	const history = useHistory();
+
+	useState(() => {
+		const authentication = auth.onAuthStateChanged(async (user) => {
+			if (user) {
+				// User is signed in, see docs for a list of available properties
+				// https://firebase.google.com/docs/reference/js/auth.user
+				// const uid = user.uid;
+				// // console.info(user);
+				// const querySnapshot = await getDoc(
+				// 	doc(
+				// 		db,
+				// 		'Universitas Multimedia Nusantara',
+				// 		'User',
+				// 		'User',
+				// 		String(user.email)
+				// 	)
+				// );
+				// setProfile(querySnapshot.data());
+				// ...
+			} else {
+				history.push('/login');
+
+				// User is signed out
+				// ...
+			}
+		});
+		return authentication;
+	}, []);
+
 	return (
 		<IonPage>
 			<IonHeader>
@@ -77,7 +110,11 @@ export const ProfileAdmin: React.FC = () => {
 
 				<IonButton
 					style={{ marginTop: '1.5rem', width: '100%' }}
-					color="danger">
+					color="danger"
+					onClick={() => {
+						localStorage.removeItem('profile');
+						signOut(auth);
+					}}>
 					Keluar Akun
 				</IonButton>
 			</IonContent>

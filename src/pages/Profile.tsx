@@ -11,9 +11,27 @@ import {
 	IonTitle,
 	IonToolbar,
 } from '@ionic/react';
-import React from 'react';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import React, { useState } from 'react';
+import { auth, db } from '../utils/firebase';
+import { getDoc, doc } from 'firebase/firestore';
+import { useHistory } from 'react-router-dom';
 
 export const Profile: React.FC = () => {
+	const history = useHistory();
+	const [profile, setProfile] = useState<any>('');
+
+	useState(() => {
+		const authentication = auth.onAuthStateChanged(async (user) => {
+			if (user) {
+				setProfile(JSON.parse(String(localStorage.getItem('profile'))));
+			} else {
+				history.push('/login');
+			}
+		});
+		return authentication;
+	}, []);
+
 	return (
 		<IonPage>
 			<IonHeader>
@@ -70,7 +88,9 @@ export const Profile: React.FC = () => {
 								fontSize: '2rem',
 								color: 'white',
 							}}>
-							<p style={{ fontWeight: 700, marginTop: '0rem' }}>John Doe</p>
+							<p style={{ fontWeight: 700, marginTop: '0rem' }}>
+								{profile.nama}
+							</p>
 						</IonText>
 					</div>
 
@@ -79,41 +99,42 @@ export const Profile: React.FC = () => {
 							<p style={{ fontWeight: 700, marginBottom: '-1rem' }}>
 								Divisi Pekerjaan
 							</p>
-							<p>Information Technology</p>
+							<p>{profile.divisi}</p>
 						</IonText>
 						<IonText>
 							<p style={{ fontWeight: 700, marginBottom: '-1rem' }}>
 								Posisi Pekerjaan
 							</p>
-							<p>Front End Website Developer</p>
+							<p>{profile.posisi}</p>
 						</IonText>
 						<IonText>
 							<p style={{ fontWeight: 700, marginBottom: '-1rem' }}>
 								Alamat Surel
 							</p>
-							<p>john.doe@mail.com</p>
+							<p>{profile.surel}</p>
 						</IonText>
 						<IonText>
 							<p style={{ fontWeight: 700, marginBottom: '-1rem' }}>
 								Nomor Telepon
 							</p>
-							<p>+6201234567890</p>
+							<p>{profile.telepon}</p>
 						</IonText>
 						<IonText>
 							<p style={{ fontWeight: 700, marginBottom: '-1rem' }}>
 								Alamat Rumah
 							</p>
-							<p>
-								Jalan Scientia Boulevard Gading, Curug Sangereng, Serpong,
-								Kabupaten Tangerang, Banten 15810
-							</p>
+							<p>{profile.alamat}</p>
 						</IonText>
 					</div>
 				</div>
 
 				<IonButton
 					style={{ marginTop: '1.5rem', width: '100%' }}
-					color="danger">
+					color="danger"
+					onClick={() => {
+						localStorage.removeItem('profile');
+						signOut(auth);
+					}}>
 					Keluar Akun
 				</IonButton>
 			</IonContent>

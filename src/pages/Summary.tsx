@@ -13,8 +13,82 @@ import {
 	IonTitle,
 	IonToolbar,
 } from '@ionic/react';
+import { useState } from 'react';
+import { auth, db } from '../utils/firebase';
+import { useHistory } from 'react-router-dom';
+import { getDoc, doc, getDocs, collection, query } from 'firebase/firestore';
 
 export const Summary: React.FC = () => {
+	const history = useHistory();
+	const [profile, setProfile] = useState<any>('');
+	const [dataKehadiran, setDataKehadiran] = useState<any>(null);
+
+	const getData = async () => {
+		const allKehadiran = await getDocs(
+			query(
+				collection(
+					db,
+					JSON.parse(String(localStorage.getItem('profile'))).perusahaan,
+					'User',
+					'User',
+					JSON.parse(String(localStorage.getItem('profile'))).surel,
+					'Kehadiran'
+					// 'Kehadiran'
+					// getLocalCalendar().toLocaleDateString('id', {
+					// 	year: 'numeric',
+					// 	month: 'long',
+					// })
+					// getLocalCalendar().toLocaleDateString('id', {
+					// 	year: 'numeric',
+					// 	month: 'long',
+					// }),
+					// getLocalCalendar().toLocaleDateString('id', { day: 'numeric' })
+				)
+			)
+		);
+
+		const filteredData = allKehadiran.docs.map((doc) => ({
+			...doc.data(),
+			id: doc.id,
+		}));
+
+		console.info(filteredData);
+
+		setDataKehadiran(filteredData);
+	};
+
+	const getLocalCalendar = () => {
+		// Step 1:
+		const utcDateString = new Date().toISOString();
+		const utcDateWithoutMillis = utcDateString.slice(0, -5) + 'Z';
+		const utcDate = new Date(utcDateWithoutMillis);
+		// console.log('UTC Date:', utcDate.toISOString());
+
+		// Step 2:
+		const offsetMinutes = utcDate.getTimezoneOffset();
+		// console.log('Time Zone Offset (minutes):', offsetMinutes);
+
+		// Step 3:
+		const localTime = new Date(utcDate.getTime() - offsetMinutes * 60 * 1000);
+		// console.log('Local Time:', localTime.toISOString());
+
+		return utcDate;
+	};
+
+	useState(() => {
+		const authentication = auth.onAuthStateChanged(async (user) => {
+			if (user) {
+				setProfile(JSON.parse(String(localStorage.getItem('profile'))));
+
+				getData();
+			} else {
+				history.push('/login');
+			}
+		});
+
+		return authentication;
+	}, []);
+
 	return (
 		<IonPage>
 			<IonHeader>
@@ -44,7 +118,9 @@ export const Summary: React.FC = () => {
 
 				<IonAccordionGroup>
 					{['Mei', 'April', 'Maret'].map((value) => (
-						<IonAccordion value={value}>
+						<IonAccordion
+							key={value}
+							value={value}>
 							<IonItem
 								slot="header"
 								color="attendify">
